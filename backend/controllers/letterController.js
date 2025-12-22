@@ -16,6 +16,10 @@ const transporter = nodemailer.createTransport({
 export const subscribeNewsletter = async (req, res) => {
   const { email } = req.body;
 
+  console.log("1. User variable exists?", !!process.env.EMAIL_USER);
+  console.log("2. Pass variable exists?", !!process.env.EMAIL_PASS);
+  console.log("3. Target Email:", email);
+
   if (!email) {
     return res.status(400).json({ error: "Email is required" });
   }

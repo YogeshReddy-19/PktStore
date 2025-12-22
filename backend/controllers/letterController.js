@@ -8,6 +8,7 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL_USER, 
     pass: process.env.EMAIL_PASS, 
   },
+  family: 4,
 });
 
 export const subscribeNewsletter = async (req, res) => {
@@ -18,7 +19,7 @@ export const subscribeNewsletter = async (req, res) => {
   }
 
   const mailOptions = {
-    from: `PktStore <pktstorehelp@gmail.com>`, 
+    from: `Pktstore <pktstorehelp@gmail.com>`, 
     to: email,
     subject: "Welcome to PktStore Community!",
     html: `

@@ -1,53 +1,44 @@
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com", 
-  port: 587,            
+  host: "smtp-relay.brevo.com", 
+  port: 587,
   secure: false, 
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    user: process.env.EMAIL_USER, 
+    pass: process.env.EMAIL_PASS, 
   },
-  tls: {
-        rejectUnauthorized: false
-  },
-  family:4,
 });
 
 export const subscribeNewsletter = async (req, res) => {
   const { email } = req.body;
-
-  console.log("1. User variable exists?", !!process.env.EMAIL_USER);
-  console.log("2. Pass variable exists?", !!process.env.EMAIL_PASS);
-  console.log("3. Target Email:", email);
 
   if (!email) {
     return res.status(400).json({ error: "Email is required" });
   }
 
   const mailOptions = {
-    from: `PktStore <${process.env.EMAIL_USER}>`,
+    from: `PktStore <pktstorehelp@gmail.com>`, 
     to: email,
-    subject: "Welcome to Our Community!",
+    subject: "Welcome to PktStore Community!",
     html: `
       <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
-        <h1 style="color: #27bcd3;">Thank You for Registering!</h1>
+        <h1 style="color: #27bcd3;">Welcome!</h1>
         <p>Hi there,</p>
-        <p>We are thrilled to have you join our community.</p>
-        <p>Stay tuned for the latest products, exclusive offers, andnews.</p>
+        <p>Thanks for subscribing to our newsletter. We are glad to have you!</p>
         <br/>
         <p>Best Regards,</p>
-        <p><strong>PktStore</strong></p>
+        <p><strong>PktStore Team</strong></p>
       </div>
     `,
   };
 
   try {
     await transporter.sendMail(mailOptions);
-    console.log("Newsletter email sent to:", email);
+    console.log("✅ Email Sent Successfully via Brevo to:", email);
     res.json({ success: true, message: "Email sent successfully" });
   } catch (error) {
-    console.error("Email Error:", error);
+    console.error("❌ Brevo Email Error:", error);
     res.status(500).json({ error: "Failed to send email" });
   }
 };

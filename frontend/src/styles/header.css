@@ -224,7 +224,7 @@
 
 @media (max-width: 600px) {
   .navbar {
-    padding: 0 10px;
+    padding: 10px 15px;
     height: auto;
     min-height: 60px;
     flex-wrap: wrap;
@@ -239,6 +239,15 @@
   .rightnav {
     flex-wrap: wrap;
     justify-content: flex-end;
+    flex-grow: 1;
+  }
+
+  #searchb {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    order: 3;
+    margin-top: 5px;
   }
 
   .smbtn {
@@ -258,9 +267,5 @@
   .user-section button {
     padding: 6px 12px;
     font-size: 12px;
-  }
-  
-  #searchb {
-    display: none;
   }
 }

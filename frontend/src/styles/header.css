@@ -1,0 +1,266 @@
+* {
+  box-sizing: border-box;
+}
+
+.navbar {
+  width: 100%;
+  max-width: 100vw;
+  height: 70px;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  border-radius: 40px;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  height: 45px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.rightnav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.smbtn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  margin: 0 8px;
+  cursor: pointer;
+  color: #333;
+  transition: 0.2s;
+  white-space: nowrap;
+}
+
+.smbtn:hover {
+  color: #ff6600;
+}
+
+#searchb {
+  height: 30px;
+  width: 100%;
+  max-width: 200px;
+}
+
+.cartl {
+  height: 30px;
+  width: 30px;
+}
+
+.cart {
+  background: #ff6600;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.2s;
+  white-space: nowrap;
+}
+
+.cart:hover {
+  background: #e65c00;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-section h6 {
+  margin: 0;
+  font-size: 15px;
+  color: #333;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.user-section button {
+  background: #27bcd3;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.user-section button:hover {
+  background: #28c3de;
+}
+
+.username-trigger {
+  margin: 0 5px;
+  color: #27bcd3;
+  cursor: pointer;
+  border-bottom: 1px dashed transparent;
+  transition: all 0.2s;
+}
+
+.username-trigger:hover {
+  border-bottom: 1px dashed #27bcd3;
+}
+
+.profile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; 
+}
+
+.profile-card {
+  background: white;
+  width: 90%;
+  max-width: 400px;
+  max-height: 80vh; 
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: popIn 0.3s ease;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.profile-header h2 {
+  margin: 0;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.profile-details p {
+  margin: 8px 0;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.profile-orders {
+  margin-top: 15px;
+  flex-grow: 1;
+  overflow-y: auto; 
+}
+
+.profile-orders h3 {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #27bcd3;
+}
+
+.mini-order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mini-order-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border: 1px solid #eee;
+  border-radius: 6px;
+}
+
+.mini-order-item img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.ord-name {
+  display: block;
+  font-weight: bold;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+.ord-meta {
+  font-size: 0.75rem;
+  color: #777;
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    padding: 0 10px;
+    height: auto;
+    min-height: 60px;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-radius: 0;
+  }
+
+  .logo {
+    height: 35px;
+  }
+  
+  .rightnav {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .smbtn {
+    font-size: 13px;
+    margin: 0 4px;
+  }
+
+  .cart {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+
+  .user-section h6 {
+    display: none;
+  }
+  
+  .user-section button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  
+  #searchb {
+    display: none;
+  }
+}

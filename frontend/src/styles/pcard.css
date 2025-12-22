@@ -1,0 +1,33 @@
+.pcard {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.pcard:hover {
+  transform: translateY(-5px);
+}
+
+.pcard img {
+  width: 100%;
+  height: 180px;        
+  object-fit: contain; 
+  padding: 5px;
+}
+
+.pcard h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 10px 0 5px;
+}
+
+.pcard p {
+  color: #27bcd3;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+}

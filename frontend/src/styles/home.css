@@ -1,0 +1,149 @@
+.section-title {
+  display: flex;
+  color: #27bcd3;
+  transition: transform 0.2s ease, color 0.2s ease;
+  justify-content: center;
+  font-size: 2rem;
+  margin-top: 20px;
+}
+
+.section-title:hover {
+  transform: scale(1.08);
+  color: #ff6600;
+  cursor: pointer;
+}
+
+.home-products-row {
+  width: 100%;
+  padding: 40px 60px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.specs-section {
+  padding: 50px 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.specs-title {
+  color: #27bcd3;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.specs-subtitle {
+  color: #666;
+  margin-bottom: 40px;
+  font-size: 1rem;
+}
+
+.specs-grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.spec-card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 300px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.spec-card:hover {
+  transform: translateY(-5px);
+}
+
+.spec-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+.spec-card h3 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.spec-card p {
+  color: #777;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.newsletter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px 0;
+  width: 100%;
+}
+
+.newsletter-input {
+  padding: 12px 20px;
+  width: 300px;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border-radius: 35px;
+  outline: none;
+}
+
+.newsletter-btn {
+  padding: 12px 25px;
+  background-color: #27bcd3;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 35px;
+  transition: background-color 0.2s;
+}
+
+.newsletter-btn:hover {
+  background-color: #333;
+}
+
+@media (max-width: 768px) {
+  .home-products-row {
+    grid-template-columns: repeat(1, 1fr);
+    padding: 20px 15px;
+    gap: 15px;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    margin-top: 10px;
+  }
+
+  .specs-section {
+    padding: 30px 15px;
+    margin-top: 20px;
+  }
+
+  .specs-title {
+    font-size: 1.5rem;
+  }
+
+  .spec-card {
+    width: 100%;
+    max-width: 350px;
+    padding: 20px;
+  }
+
+  .newsletter-input {
+    width: 90%;
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+
+  .newsletter-btn {
+    width: 50%;
+    min-width: 120px;
+  }
+}

@@ -1,0 +1,62 @@
+.auth-container {
+  width: 400px;
+  margin: 50px auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.form-box {
+  width: 800px;
+  display: flex;
+  transform-style: preserve-3d;
+  transition: all 0.5s ease;
+}
+
+.show-register .form-box {
+  transform: translateX(-400px);
+}
+
+.form {
+  width: 400px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form input {
+  margin: 8px 0;
+  padding: 10px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+
+.btn {
+  margin-top: 12px;
+  padding: 10px;
+  border: none;
+  background: #27bcd3;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.switch-text {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.switch-text span {
+  color: #27bcd3;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+.switch-text span:hover {
+  text-decoration: underline;
+  text-shadow: 0 0 10px #4e54c8;
+}

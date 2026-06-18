@@ -10,7 +10,7 @@ async function getProducts(req,res){
           return res.json(JSON.parse(cachedProds));
         }      
         const result = await db.query("SELECT * FROM products");
-        await redisClient.setex(cacheKey,3600,JSON.stringfy(result.rows));
+        await redisClient.setEx(cacheKey,3600,JSON.stringify(result.rows));
         res.json(result.rows);
     }
     catch(err){
@@ -38,13 +38,13 @@ export const searchProducts = async (req, res) => {
 };
 export async function getSingleProduct(req, res) {
   const redisClient = req.app.get("redis");
+  const id = req.params.id;
   const cacheKey = `products:${id}`;
   try {
     const cachedProd = await redisClient.get(cacheKey);
     if(cachedProd){
       return res.json(JSON.parse(cachedProd));
     }  
-    const id = req.params.id;
     const result = await db.query("SELECT * FROM products WHERE prod_id = $1", [id]);
     if (result.rows.length === 0)
       return res.status(404).json({ message: "Product not found" });

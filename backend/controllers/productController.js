@@ -1,8 +1,16 @@
 import db from "../datab.js";
 import React from "react";
+
 async function getProducts(req,res){
+  const redisClient = req.app.get("redis");
+  const cacheKey = "products:all";
     try{
+        const cachedProds = await redisClient.get(cacheKey);
+        if(cachedProds){
+          return res.json(JSON.parse(cachedProds));
+        }      
         const result = await db.query("SELECT * FROM products");
+        await redisClient.setex(cacheKey,3600,JSON.stringfy(result.rows));
         res.json(result.rows);
     }
     catch(err){
@@ -29,11 +37,18 @@ export const searchProducts = async (req, res) => {
   }
 };
 export async function getSingleProduct(req, res) {
+  const redisClient = req.app.get("redis");
+  const cacheKey = `products:${id}`;
   try {
+    const cachedProd = await redisClient.get(cacheKey);
+    if(cachedProd){
+      return res.json(JSON.parse(cachedProd));
+    }  
     const id = req.params.id;
     const result = await db.query("SELECT * FROM products WHERE prod_id = $1", [id]);
     if (result.rows.length === 0)
       return res.status(404).json({ message: "Product not found" });
+    await redisClient.setEx(cacheKey, 3600, JSON.stringify(result.rows[0]));
     res.json(result.rows[0]);
   } catch (err) {
     console.log(err);
@@ -41,6 +56,7 @@ export async function getSingleProduct(req, res) {
   }
 }
 export async function addReview(req, res) {
+  const redisClient = req.app.get("redis");
   try {
     const id = req.params.id;
     const { user, rating, text, date } = req.body;
@@ -63,7 +79,7 @@ export async function addReview(req, res) {
       "UPDATE products SET reviews = $1 WHERE prod_id = $2",
       [JSON.stringify(reviews), id]
     );
-
+    const redisClient = req.app.get("redis");
     res.json({ message: "Review added successfully" });
   } catch (err) {
     console.log(err);

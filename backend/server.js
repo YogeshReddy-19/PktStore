@@ -11,9 +11,15 @@ import cartRoutes from "./routes/cartRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import stripeRoutes from "./routes/stripeRoutes.js";
 import letterRoutes from "./routes/letterRoutes.js";
+import {createClient} from "redis"
 
 const app = new express();
 const port = 3000;
+
+redisClient = createClient();
+redisClient.on("error", (error) => console.error("Redis Error", error));
+redisClient.on("connect", () => console.log("Redis connected"));
+
 app.use(express.json());
 app.use(cors({
   origin: true,
@@ -33,6 +39,7 @@ app.use(express.static("frontend"));
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.set("redis", redisClient);
 app.use("/api",authRoutes);
 app.use("/api",productRoutes);
 app.use("/api", cartRoutes);
@@ -40,6 +47,13 @@ app.use("/api/orders", orderRoutes);
 app.use("/api",stripeRoutes);
 app.use("/api", letterRoutes);
 
-app.listen(port, ()=>{
-    console.log(`server running on port ${port}`);
-});
+(async () => {
+    try {
+        await redisClient.connect();
+        app.listen(port, () => {
+            console.log(`server running on port ${port}`);
+        });
+    } catch (err) {
+        console.error("Failed to start", err);
+    }
+})();

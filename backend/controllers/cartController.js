@@ -2,6 +2,8 @@ import db from "../datab.js";
 
 export const addToCart = async (req, res) => {
   const { userId, product } = req.body;
+  const redisClient = req.app.get("redis");
+  const cacheKey = `cart:${userId}`;
 
   if (!userId) {
     return res.status(401).json({ error: "User not logged in" });
@@ -31,6 +33,7 @@ export const addToCart = async (req, res) => {
       JSON.stringify(currentCart),
       userId,
     ]);
+    await redisClient.setEx(cacheKey, 86400, JSON.stringify(currentCart));
 
     res.status(200).json({ message: "Cart updated", cart: currentCart });
   } catch (err) {
@@ -41,19 +44,26 @@ export const addToCart = async (req, res) => {
 
 export const getCart = async (req, res) => {
   const { userId } = req.params;
-
+  const redisClient = req.app.get("redis");
+  const cacheKey = `cart:${userId}`;
+  
   if (!userId || userId === "undefined" || userId === "null") {
     return res.status(401).json({ error: "User not logged in" });
   }
 
   try {
+    const cachedCart = await redisClient.get(cacheKey);
+    if (cachedCart) {
+        return res.json(JSON.parse(cachedCart));
+    }
     const result = await db.query("SELECT cart FROM users WHERE id = $1", [userId]);
     
     if (result.rows.length === 0) {
       return res.status(404).json({ error: "User not found" });
     }
-
-    res.json(result.rows[0]?.cart || []);
+    const liveCart = result.rows[0]?.cart || [];
+    await redisClient.setEx(cacheKey, 86400, JSON.stringify(liveCart));
+    res.json(liveCart);
   } catch (err) {
     console.error("Error in getCart:", err);
     res.status(500).json({ error: "Server error" });
@@ -62,7 +72,9 @@ export const getCart = async (req, res) => {
 
 export const updateCartItem = async (req, res) => {
   const { userId, productId, action } = req.body;
-  
+  const redisClient = req.app.get("redis");
+  const cacheKey = `cart:${userId}`;
+
   if (!userId) {
     return res.status(401).json({ error: "User not logged in" });
   }
@@ -98,7 +110,7 @@ export const updateCartItem = async (req, res) => {
       JSON.stringify(currentCart),
       userId,
     ]);
-
+    await redisClient.setEx(cacheKey, 86400, JSON.stringify(currentCart));
     res.json(currentCart);
 
   } catch (err) {
